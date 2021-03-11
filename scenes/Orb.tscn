@@ -1,0 +1,89 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scripts/InteractionHint.gd" type="Script" id=1]
+[ext_resource path="res://scripts/ControlAlign.gd" type="Script" id=2]
+[ext_resource path="res://scripts/ControlFollow.gd" type="Script" id=3]
+[ext_resource path="res://scenes/InteractionArea.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scripts/Orb.gd" type="Script" id=5]
+
+[sub_resource type="SpatialMaterial" id=1]
+
+[sub_resource type="CapsuleShape" id=2]
+radius = 0.6
+
+[sub_resource type="StyleBoxFlat" id=3]
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color( 0.027451, 0.141176, 0.184314, 0.490196 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Orb" type="RigidBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 0 )
+mode = 1
+script = ExtResource( 5 )
+
+[node name="Model" type="CSGSphere" parent="."]
+radius = 0.5
+radial_segments = 32
+rings = 16
+material = SubResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 2 )
+
+[node name="InteractionArea" parent="." instance=ExtResource( 4 )]
+ui_path = NodePath("../InteractionHint/ControlFollow")
+
+[node name="InteractionHint" type="Control" parent="."]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ControlFollow" type="Control" parent="InteractionHint"]
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+target_path = NodePath("../../InteractionArea")
+offset = Vector2( 0, -30 )
+
+[node name="AlignContainer" type="Control" parent="InteractionHint/ControlFollow"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+alignment = "CENTER"
+
+[node name="Panel" type="PanelContainer" parent="InteractionHint/ControlFollow/AlignContainer"]
+margin_left = -89.0
+margin_top = -9.0
+margin_right = 89.0
+margin_bottom = 9.0
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InteractionHint/ControlFollow/AlignContainer/Panel"]
+margin_left = 8.0
+margin_top = 2.0
+margin_right = 170.0
+margin_bottom = 16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="InteractionHint/ControlFollow/AlignContainer/Panel/VBoxContainer"]
+margin_right = 162.0
+margin_bottom = 14.0
+text = "Pressione F para interagir"
+__meta__ = {
+"_edit_use_anchors_": false
+}

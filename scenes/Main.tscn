@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/PostProcessingContainer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/World.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/Main.gd" type="Script" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+
+[node name="Main" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PostProcessingContainer" parent="." instance=ExtResource( 1 )]
+material = SubResource( 1 )
+viewport_content = NodePath("")
+
+[node name="Viewport" parent="PostProcessingContainer/ViewportContainer" index="0"]
+msaa = 3
+
+[node name="World" parent="PostProcessingContainer/ViewportContainer/Viewport" index="0" instance=ExtResource( 2 )]
+
+[editable path="PostProcessingContainer"]
