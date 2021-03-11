@@ -2,11 +2,11 @@
 
 [ext_resource path="res://scripts/InteractionArea.gd" type="Script" id=1]
 
-[sub_resource type="CylinderShape" id=9]
+[sub_resource type="CylinderShape" id=1]
 
 [node name="InteractionArea" type="Area"]
 script = ExtResource( 1 )
 ui_path = NodePath("../InteractionHint")
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-shape = SubResource( 9 )
+shape = SubResource( 1 )

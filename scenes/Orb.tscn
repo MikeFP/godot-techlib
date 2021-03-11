@@ -1,16 +1,23 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/Orb.gd" type="Script" id=1]
 [ext_resource path="res://scenes/InteractionArea.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scripts/InteractionHint.gd" type="Script" id=3]
 [ext_resource path="res://addons/ui_utils/scripts/AlignContainer.gd" type="Script" id=4]
 [ext_resource path="res://addons/ui_utils/scripts/ScreenFollow.gd" type="Script" id=5]
 [ext_resource path="res://addons/ui_utils/scripts/FitPanelContainer.gd" type="Script" id=6]
+[ext_resource path="res://addons/ui_utils/scripts/DynamicLabel.gd" type="Script" id=7]
 
 [sub_resource type="SpatialMaterial" id=1]
 
 [sub_resource type="CapsuleShape" id=2]
 radius = 0.6
+
+[sub_resource type="StyleBoxFlat" id=4]
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color( 0.109804, 0.45098, 0.615686, 0.462745 )
 
 [sub_resource type="StyleBoxFlat" id=3]
 content_margin_left = 8.0
@@ -24,64 +31,101 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [node name="Orb" type="RigidBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 0 )
 mode = 1
 script = ExtResource( 1 )
+description = "Orb Normal"
 
 [node name="Model" type="CSGSphere" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 radius = 0.5
 radial_segments = 32
 rings = 16
 material = SubResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
 shape = SubResource( 2 )
 
 [node name="InteractionArea" parent="." instance=ExtResource( 2 )]
-ui_path = NodePath("../InteractionHint/ScreenFollow")
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 
-[node name="InteractionHint" type="Control" parent="."]
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ScreenFollow" type="Control" parent="InteractionHint"]
+[node name="Name" type="Control" parent="."]
+margin_left = 100.0
+margin_top = 20.0
+margin_right = 100.0
+margin_bottom = 20.0
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-target_path = NodePath("../../InteractionArea")
-offset = Vector2( 0, -30 )
+target_path = NodePath("../Model")
+world_offset = Vector3( 0, 1, 0 )
+screen_offset = Vector2( 0, -35 )
 
-[node name="Align" type="Container" parent="InteractionHint/ScreenFollow"]
+[node name="Align" type="Container" parent="Name"]
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+alignment = "CENTER"
 
-[node name="Panel" type="PanelContainer" parent="InteractionHint/ScreenFollow/Align"]
-margin_left = -89.0
+[node name="Fit" type="PanelContainer" parent="Name/Align"]
+margin_left = -45.5
+margin_top = -11.0
+margin_right = 45.5
+margin_bottom = 11.0
+custom_styles/panel = SubResource( 4 )
+script = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="Name/Align/Fit"]
+margin_left = 8.0
+margin_top = 4.0
+margin_right = 83.0
+margin_bottom = 18.0
+text = "Orb Normal"
+script = ExtResource( 7 )
+node_path = NodePath("../../../..")
+property_name = "description"
+
+[node name="InteractionHint" type="Control" parent="."]
+margin_left = 100.0
+margin_top = 50.0
+margin_right = 100.0
+margin_bottom = 50.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+target_path = NodePath("../Model")
+world_offset = Vector3( 0, 1, 0 )
+screen_offset = Vector2( 0, -10 )
+
+[node name="Align" type="Container" parent="InteractionHint"]
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+alignment = "CENTER"
+
+[node name="Panel" type="PanelContainer" parent="InteractionHint/Align"]
+margin_left = -44.5
 margin_top = -9.0
-margin_right = 89.0
+margin_right = 44.5
 margin_bottom = 9.0
 custom_styles/panel = SubResource( 3 )
 script = ExtResource( 6 )
 
-[node name="VBox" type="VBoxContainer" parent="InteractionHint/ScreenFollow/Align/Panel"]
+[node name="Label" type="Label" parent="InteractionHint/Align/Panel"]
 margin_left = 8.0
 margin_top = 2.0
-margin_right = 170.0
+margin_right = 81.0
 margin_bottom = 16.0
+size_flags_horizontal = 5
+text = "[F] Interagir"
+script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Label" type="Label" parent="InteractionHint/ScreenFollow/Align/Panel/VBox"]
-margin_right = 162.0
-margin_bottom = 14.0
-text = "Pressione F para interagir"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+node_path = NodePath("../../../..")
+update_signal = "int_ui_text"
+value_in_signal = true

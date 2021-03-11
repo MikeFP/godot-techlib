@@ -82,5 +82,7 @@ transform = Transform( 0.5, -0.75, 0.433013, 0, 0.5, 0.866025, -0.866025, -0.433
 shadow_enabled = true
 
 [node name="VignetteOrb" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0 )
 script = ExtResource( 3 )
+description = "Shader Vignette"
 shader = ExtResource( 4 )

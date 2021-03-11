@@ -1,9 +1,12 @@
 extends RigidBody
 class_name Orb
 
+export var description := "Regular Orb"
+
 onready var int_area = $InteractionArea
-onready var int_ui = $InteractionHint
 var activated = false
+
+signal int_ui_text
 
 func _ready():
 	deactivate()
@@ -17,7 +20,7 @@ func _on_interacted():
 
 func activate():
 	activated = true
-	int_ui.text = "Pressione F para desativar"
+	emit_signal("int_ui_text", "[ F ] Desativar")
 	$Model.material.albedo_color = Color(1.0,1.0,1.0)
 	$Model.material.flags_unshaded = false
 	_on_activated()
@@ -27,7 +30,7 @@ func _on_activated():
 
 func deactivate():
 	activated = false
-	int_ui.text = "Pressione F para ativar"
+	emit_signal("int_ui_text", "[ F ] Ativar")
 	$Model.material.albedo_color = Color(0,0,0)
 	$Model.material.flags_unshaded = false
 	_on_deactivated()
