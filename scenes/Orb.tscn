@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://scripts/InteractionHint.gd" type="Script" id=1]
-[ext_resource path="res://scripts/ControlAlign.gd" type="Script" id=2]
-[ext_resource path="res://scripts/ControlFollow.gd" type="Script" id=3]
-[ext_resource path="res://scenes/InteractionArea.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scripts/Orb.gd" type="Script" id=5]
+[ext_resource path="res://scripts/Orb.gd" type="Script" id=1]
+[ext_resource path="res://scenes/InteractionArea.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/InteractionHint.gd" type="Script" id=3]
+[ext_resource path="res://addons/ui_utils/scripts/AlignContainer.gd" type="Script" id=4]
+[ext_resource path="res://addons/ui_utils/scripts/ScreenFollow.gd" type="Script" id=5]
+[ext_resource path="res://addons/ui_utils/scripts/FitPanelContainer.gd" type="Script" id=6]
 
 [sub_resource type="SpatialMaterial" id=1]
 
@@ -16,7 +17,7 @@ content_margin_left = 8.0
 content_margin_right = 8.0
 content_margin_top = 2.0
 content_margin_bottom = 2.0
-bg_color = Color( 0.027451, 0.141176, 0.184314, 0.490196 )
+bg_color = Color( 0.0392157, 0.207843, 0.25098, 0.580392 )
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -25,7 +26,7 @@ corner_radius_bottom_left = 4
 [node name="Orb" type="RigidBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 0 )
 mode = 1
-script = ExtResource( 5 )
+script = ExtResource( 1 )
 
 [node name="Model" type="CSGSphere" parent="."]
 radius = 0.5
@@ -37,41 +38,39 @@ material = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 2 )
 
-[node name="InteractionArea" parent="." instance=ExtResource( 4 )]
-ui_path = NodePath("../InteractionHint/ControlFollow")
+[node name="InteractionArea" parent="." instance=ExtResource( 2 )]
+ui_path = NodePath("../InteractionHint/ScreenFollow")
 
 [node name="InteractionHint" type="Control" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ControlFollow" type="Control" parent="InteractionHint"]
-script = ExtResource( 3 )
+[node name="ScreenFollow" type="Control" parent="InteractionHint"]
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 target_path = NodePath("../../InteractionArea")
 offset = Vector2( 0, -30 )
 
-[node name="AlignContainer" type="Control" parent="InteractionHint/ControlFollow"]
-script = ExtResource( 2 )
+[node name="Align" type="Container" parent="InteractionHint/ScreenFollow"]
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 alignment = "CENTER"
 
-[node name="Panel" type="PanelContainer" parent="InteractionHint/ControlFollow/AlignContainer"]
+[node name="Panel" type="PanelContainer" parent="InteractionHint/ScreenFollow/Align"]
 margin_left = -89.0
 margin_top = -9.0
 margin_right = 89.0
 margin_bottom = 9.0
 custom_styles/panel = SubResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+script = ExtResource( 6 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="InteractionHint/ControlFollow/AlignContainer/Panel"]
+[node name="VBox" type="VBoxContainer" parent="InteractionHint/ScreenFollow/Align/Panel"]
 margin_left = 8.0
 margin_top = 2.0
 margin_right = 170.0
@@ -80,7 +79,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="InteractionHint/ControlFollow/AlignContainer/Panel/VBoxContainer"]
+[node name="Label" type="Label" parent="InteractionHint/ScreenFollow/Align/Panel/VBox"]
 margin_right = 162.0
 margin_bottom = 14.0
 text = "Pressione F para interagir"
