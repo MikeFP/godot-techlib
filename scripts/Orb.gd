@@ -22,7 +22,7 @@ func activate():
 	activated = true
 	emit_signal("int_ui_text", "[ F ] Desativar")
 	$Model.material.albedo_color = Color(1.0,1.0,1.0)
-	$Model.material.flags_unshaded = false
+	$Model.material.emission_energy = 6.0
 	_on_activated()
 
 func _on_activated():
@@ -31,8 +31,8 @@ func _on_activated():
 func deactivate():
 	activated = false
 	emit_signal("int_ui_text", "[ F ] Ativar")
-	$Model.material.albedo_color = Color(0,0,0)
-	$Model.material.flags_unshaded = false
+	$Model.material.albedo_color = Color(0.3,0.3,0.3)
+	$Model.material.emission_energy = 0.0
 	_on_deactivated()
 
 func _on_deactivated():
