@@ -60,7 +60,6 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-alignment = "CENTER"
 
 [node name="Panel" type="PanelContainer" parent="InteractionHint/ScreenFollow/Align"]
 margin_left = -89.0

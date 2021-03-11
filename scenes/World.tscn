@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/Movement.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Orb.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/orbs/ShaderOrb.gd" type="Script" id=3]
 [ext_resource path="res://lib/shaders/Vignette.shader" type="Shader" id=4]
+[ext_resource path="res://lib/scripts/TargetFollow.gd" type="Script" id=5]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
@@ -51,6 +52,8 @@ radius = 0.5
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.5, 0.866026, 0, -0.866025, 0.5, 0, 19, 12 )
 fov = 40.0
+script = ExtResource( 5 )
+target_path = NodePath("../Player")
 
 [node name="Floor" type="CSGBox" parent="."]
 width = 40.0
