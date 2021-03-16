@@ -4,7 +4,7 @@ export var target_path: NodePath
 export var offset := Vector3()
 export(float, 0, 1) var smoothness := 0.125
 
-onready var target = get_node(target_path)
+onready var target = get_node(target_path) if target_path != "" else null
 
 func _ready():
 	if target != null:

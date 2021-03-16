@@ -1,11 +1,43 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/Main.gd" type="Script" id=1]
-[ext_resource path="res://scenes/PostProcessingContainer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://lib/scripts/CameraClone.gd" type="Script" id=2]
 [ext_resource path="res://scenes/World.tscn" type="PackedScene" id=3]
+[ext_resource path="res://lib/scripts/SpatialMaskContainer.gd" type="Script" id=4]
 
-[sub_resource type="ShaderMaterial" id=1]
+[sub_resource type="ShaderMaterial" id=5]
 resource_local_to_scene = true
+
+[sub_resource type="Environment" id=6]
+background_mode = 1
+background_color = Color( 0, 0, 0, 0 )
+
+[sub_resource type="Shader" id=4]
+code = "shader_type canvas_item;
+
+uniform sampler2D mask_texture;
+uniform bool inverted = false;
+
+void fragment() {
+	vec4 tex = texture(TEXTURE, UV);
+	vec4 mask = texture(mask_texture, UV);
+	float alpha = mask.a;
+	if (inverted) {
+		alpha = 1.-alpha;
+	}
+	tex.a *= alpha;
+	COLOR = tex;
+}"
+custom_defines = ""
+
+[sub_resource type="ViewportTexture" id=7]
+viewport_path = NodePath("ShaderView/Viewport/MaskView/Viewport")
+
+[sub_resource type="ShaderMaterial" id=8]
+resource_local_to_scene = true
+shader = SubResource( 4 )
+shader_param/inverted = true
+shader_param/mask_texture = SubResource( 7 )
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -15,13 +47,92 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PostProcessingContainer" parent="." instance=ExtResource( 2 )]
-material = SubResource( 1 )
+[node name="ShaderView" type="ViewportContainer" parent="."]
+material = SubResource( 5 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Viewport" parent="PostProcessingContainer/ViewportContainer" index="0"]
+[node name="Viewport" type="Viewport" parent="ShaderView"]
+size = Vector2( 1024, 600 )
+handle_input_locally = false
 msaa = 3
-shadow_atlas_size = 1
+render_target_update_mode = 3
+shadow_atlas_size = 2
 
-[node name="World" parent="PostProcessingContainer/ViewportContainer/Viewport" index="0" instance=ExtResource( 3 )]
+[node name="MaskView" type="ViewportContainer" parent="ShaderView/Viewport"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+target_layers = 8
+scan_layers = 3
 
-[editable path="PostProcessingContainer"]
+[node name="Viewport" type="Viewport" parent="ShaderView/Viewport/MaskView"]
+size = Vector2( 1024, 600 )
+transparent_bg = true
+handle_input_locally = false
+msaa = 3
+render_target_update_mode = 3
+
+[node name="MaskCamera" type="Camera" parent="ShaderView/Viewport/MaskView/Viewport"]
+transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 19, 12 )
+cull_mask = 4
+environment = SubResource( 6 )
+fov = 40.0
+script = ExtResource( 2 )
+camera_path = NodePath("../../../World/Camera")
+
+[node name="MaskedForegroundView" type="ViewportContainer" parent="ShaderView/Viewport"]
+material = SubResource( 8 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ShaderView/Viewport/MaskedForegroundView"]
+size = Vector2( 1024, 600 )
+transparent_bg = true
+handle_input_locally = false
+msaa = 3
+render_target_update_mode = 3
+
+[node name="MaskedForegroundCamera" type="Camera" parent="ShaderView/Viewport/MaskedForegroundView/Viewport"]
+transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 19, 12 )
+cull_mask = 8
+fov = 40.0
+script = ExtResource( 2 )
+camera_path = NodePath("../../../World/Camera")
+
+[node name="ForegroundView" type="ViewportContainer" parent="ShaderView/Viewport"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ShaderView/Viewport/ForegroundView"]
+size = Vector2( 1024, 600 )
+transparent_bg = true
+handle_input_locally = false
+msaa = 3
+render_target_update_mode = 3
+
+[node name="ForegroundCamera" type="Camera" parent="ShaderView/Viewport/ForegroundView/Viewport"]
+transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 19, 12 )
+cull_mask = 2
+fov = 40.0
+script = ExtResource( 2 )
+camera_path = NodePath("../../../World/Camera")
+
+[node name="World" parent="ShaderView/Viewport" instance=ExtResource( 3 )]

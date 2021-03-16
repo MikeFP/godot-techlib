@@ -6,5 +6,7 @@
 background_mode = 2
 background_sky = SubResource( 1 )
 glow_enabled = true
-glow_strength = 0.9
+glow_strength = 0.75
+glow_hdr_threshold = 2.0
+glow_hdr_scale = 1.0
 glow_bicubic_upscale = true
