@@ -4,9 +4,9 @@ var screen_shader: Shader
 
 signal screen_shader_changed
 
-func set_screen_shader(shader: Shader):
+func set_screen_shader(shader: Shader, sender: Node):
 	screen_shader = shader
-	emit_signal("screen_shader_changed", shader)
+	emit_signal("screen_shader_changed", shader, sender)
 
 func get_collision_layer_bits(layers: int):
 	var layer_array = []

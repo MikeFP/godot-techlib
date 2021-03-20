@@ -5,14 +5,14 @@
 [ext_resource path="res://scenes/World.tscn" type="PackedScene" id=3]
 [ext_resource path="res://lib/scripts/SpatialMaskContainer.gd" type="Script" id=4]
 
-[sub_resource type="ShaderMaterial" id=5]
+[sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
 
-[sub_resource type="Environment" id=6]
+[sub_resource type="Environment" id=2]
 background_mode = 1
 background_color = Color( 0, 0, 0, 0 )
 
-[sub_resource type="Shader" id=4]
+[sub_resource type="Shader" id=3]
 code = "shader_type canvas_item;
 
 uniform sampler2D mask_texture;
@@ -30,14 +30,14 @@ void fragment() {
 }"
 custom_defines = ""
 
-[sub_resource type="ViewportTexture" id=7]
+[sub_resource type="ViewportTexture" id=4]
 viewport_path = NodePath("ShaderView/Viewport/MaskView/Viewport")
 
-[sub_resource type="ShaderMaterial" id=8]
+[sub_resource type="ShaderMaterial" id=5]
 resource_local_to_scene = true
-shader = SubResource( 4 )
+shader = SubResource( 3 )
 shader_param/inverted = true
-shader_param/mask_texture = SubResource( 7 )
+shader_param/mask_texture = SubResource( 4 )
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -48,7 +48,7 @@ __meta__ = {
 }
 
 [node name="ShaderView" type="ViewportContainer" parent="."]
-material = SubResource( 5 )
+material = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 stretch = true
@@ -85,13 +85,13 @@ render_target_update_mode = 3
 [node name="MaskCamera" type="Camera" parent="ShaderView/Viewport/MaskView/Viewport"]
 transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 19, 12 )
 cull_mask = 4
-environment = SubResource( 6 )
+environment = SubResource( 2 )
 fov = 40.0
 script = ExtResource( 2 )
 camera_path = NodePath("../../../World/Camera")
 
 [node name="MaskedForegroundView" type="ViewportContainer" parent="ShaderView/Viewport"]
-material = SubResource( 8 )
+material = SubResource( 5 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 stretch = true
