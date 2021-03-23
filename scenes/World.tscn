@@ -57,6 +57,7 @@ albedo_color = Color( 0.552941, 0.352941, 0.352941, 1 )
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.5, 0.866026, 0, -0.866025, 0.5, 0, 19, 12 )
 cull_mask = 1048563
+current = true
 fov = 40.0
 script = ExtResource( 5 )
 target_path = NodePath("../Player")
