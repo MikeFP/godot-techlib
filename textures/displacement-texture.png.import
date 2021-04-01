@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/clear-sea-water.png-920663a99ac776d694f6979d6e79628c.stex"
+path="res://.import/displacement-texture.png-24b71a18fcc3942bbbb5009cdb29ae99.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/clear-sea-water.png"
-dest_files=[ "res://.import/clear-sea-water.png-920663a99ac776d694f6979d6e79628c.stex" ]
+source_file="res://textures/displacement-texture.png"
+dest_files=[ "res://.import/displacement-texture.png-24b71a18fcc3942bbbb5009cdb29ae99.stex" ]
 
 [params]
 
