@@ -1,13 +1,9 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://textures/circulo.png" type="Texture" id=1]
 [ext_resource path="res://textures/quadrado.png" type="Texture" id=2]
-[ext_resource path="res://lib/scripts/Viewport2D.gd" type="Script" id=3]
-[ext_resource path="res://textures/displacement-texture.png" type="Texture" id=4]
+[ext_resource path="res://lib/scenes/Water2D.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/Movement2D.gd" type="Script" id=5]
-[ext_resource path="res://lib/shaders/FluidFoam.shader" type="Shader" id=6]
-[ext_resource path="res://lib/shaders/WaterShader.tres" type="Shader" id=7]
-[ext_resource path="res://textures/water-ripple.png" type="Texture" id=8]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 20.0
@@ -15,51 +11,6 @@ height = 40.0
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 200, 100 )
-
-[sub_resource type="Gradient" id=7]
-offsets = PoolRealArray( 0.19697, 0.613636 )
-colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
-
-[sub_resource type="GradientTexture" id=8]
-gradient = SubResource( 7 )
-
-[sub_resource type="Curve" id=9]
-min_value = 0.1
-_data = [ Vector2( 0, 0.1 ), 0.0, 1.71764, 0, 0, Vector2( 1, 0.995643 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=10]
-curve = SubResource( 9 )
-
-[sub_resource type="ParticlesMaterial" id=11]
-flag_disable_z = true
-direction = Vector3( 0, 0, 0 )
-gravity = Vector3( 0, 0, 0 )
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale_curve = SubResource( 10 )
-color_ramp = SubResource( 8 )
-
-[sub_resource type="ShaderMaterial" id=3]
-shader = ExtResource( 7 )
-shader_param/water_velocity = Vector3( 0, -0.025, 0 )
-shader_param/ripple_strength = 0.1
-
-[sub_resource type="ViewportTexture" id=4]
-viewport_path = NodePath("Water/Viewport")
-
-[sub_resource type="ShaderMaterial" id=5]
-shader = ExtResource( 6 )
-shader_param/foam_length = 0.15
-shader_param/min_foam_length = 0.025
-shader_param/foam_velocity = Vector2( 0, -0.05 )
-shader_param/foam_color = Color( 1, 1, 1, 1 )
-shader_param/displacement_texture = ExtResource( 4 )
-
-[sub_resource type="CanvasItemMaterial" id=13]
-blend_mode = 1
-
-[sub_resource type="ViewportTexture" id=12]
-viewport_path = NodePath("Water/RippleViewport")
 
 [node name="2DWorld" type="Node2D"]
 
@@ -108,50 +59,4 @@ texture = ExtResource( 2 )
 position = Vector2( 0, 100 )
 shape = SubResource( 2 )
 
-[node name="Water" type="Node2D" parent="."]
-
-[node name="Viewport" type="Viewport" parent="Water"]
-size = Vector2( 600, 128 )
-transparent_bg = true
-handle_input_locally = false
-disable_3d = true
-usage = 0
-render_target_update_mode = 3
-script = ExtResource( 3 )
-inherit_world_2D = true
-
-[node name="WaterCamera" type="Camera2D" parent="Water/Viewport"]
-offset = Vector2( 0, -50 )
-current = true
-
-[node name="RippleViewport" type="Viewport" parent="Water"]
-size = Vector2( 600, 128 )
-transparent_bg = true
-handle_input_locally = false
-usage = 0
-render_target_v_flip = true
-render_target_update_mode = 3
-
-[node name="WaterRipples" type="Particles2D" parent="Water/RippleViewport"]
-position = Vector2( 100, 75 )
-scale = Vector2( 0.5, 0.125 )
-amount = 3
-lifetime = 2.0
-process_material = SubResource( 11 )
-texture = ExtResource( 8 )
-
-[node name="Body" type="Sprite" parent="Water"]
-material = SubResource( 3 )
-position = Vector2( 0, 128 )
-texture = SubResource( 4 )
-
-[node name="Foam" type="Sprite" parent="Water"]
-material = SubResource( 5 )
-position = Vector2( 0, 128 )
-scale = Vector2( 6, 1.28 )
-texture = ExtResource( 2 )
-
-[node name="Ripples" type="Sprite" parent="Water"]
-material = SubResource( 13 )
-position = Vector2( 0, 128 )
-texture = SubResource( 12 )
+[node name="Water" parent="." instance=ExtResource( 3 )]
