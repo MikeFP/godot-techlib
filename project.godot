@@ -19,7 +19,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://lib/scripts/Viewport2D.gd"
 }, {
-"base": "Spatial",
+"base": "CollisionObject",
 "class": "VisualCollider",
 "language": "GDScript",
 "path": "res://lib/scripts/VisualCollider.gd"

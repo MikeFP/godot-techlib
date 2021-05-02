@@ -1,0 +1,231 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://sprites/godot-character/Body.png" type="Texture" id=1]
+[ext_resource path="res://scripts/Movement2D.gd" type="Script" id=2]
+[ext_resource path="res://sprites/godot-character/Left foot.png" type="Texture" id=3]
+[ext_resource path="res://sprites/godot-character/Right foot.png" type="Texture" id=4]
+[ext_resource path="res://sprites/godot-character/Left hand.png" type="Texture" id=5]
+[ext_resource path="res://sprites/godot-character/Right hand.png" type="Texture" id=6]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 44.3522
+height = 40.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "Idle"
+length = 1.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite/Body:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.75, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -10, -64 ), Vector2( -10, -68 ), Vector2( -10, -64 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite/Left foot:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -13, -5 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite/Right foot:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 36, -5 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite/Left hand:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -54, -45 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite/Right hand:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 43, -45 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Walk"
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite/Body:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -10, -66 ), Vector2( -10, -66 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite/Left foot:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -13, -5 ), Vector2( -9, -8.2 ), Vector2( 2.3, -10.2 ), Vector2( 2.5, -5 ), Vector2( -13, -5 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite/Right foot:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 36, -5 ), Vector2( 26, -5 ), Vector2( 30, -8.2 ), Vector2( 35.5, -10.2 ), Vector2( 36, -5 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite/Left hand:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 0.35, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -54, -45 ), Vector2( -36, -51 ), Vector2( -42, -40 ), Vector2( -54, -45 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite/Right hand:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.5, 0.7, 0.85, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 43, -45 ), Vector2( 61, -51 ), Vector2( 55, -40 ), Vector2( 43, -45 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sprite/Left hand:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -45.0, 0.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Sprite/Right hand:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0.5, 0.75, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -45.0, 0.0 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "Walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+advance_condition = "walking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+advance_condition = "idle"
+
+[sub_resource type="AnimationNodeStateMachine" id=4]
+states/Idle/node = SubResource( 3 )
+states/Idle/position = Vector2( 370.6, 94.2 )
+states/Walk/node = SubResource( 7 )
+states/Walk/position = Vector2( 583.4, 120.6 )
+transitions = [ "Idle", "Walk", SubResource( 8 ), "Walk", "Idle", SubResource( 9 ) ]
+start_node = "Idle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=5]
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 2 )
+sprite_path = NodePath("Sprite")
+anim_tree_path = NodePath("AnimationTree")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -63.6 )
+shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Idle = SubResource( 2 )
+anims/Walk = SubResource( 6 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 4 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 5 )
+parameters/conditions/idle = false
+parameters/conditions/walking = false
+
+[node name="Sprite" type="Node2D" parent="."]
+
+[node name="Right foot" type="Sprite" parent="Sprite"]
+position = Vector2( 36, -5 )
+texture = ExtResource( 4 )
+
+[node name="Left foot" type="Sprite" parent="Sprite"]
+position = Vector2( -13, -5 )
+texture = ExtResource( 3 )
+
+[node name="Right hand" type="Sprite" parent="Sprite"]
+position = Vector2( 43, -45 )
+texture = ExtResource( 6 )
+
+[node name="Body" type="Sprite" parent="Sprite"]
+position = Vector2( -10, -67.531 )
+texture = ExtResource( 1 )
+
+[node name="Left hand" type="Sprite" parent="Sprite"]
+position = Vector2( -54, -45 )
+texture = ExtResource( 5 )
